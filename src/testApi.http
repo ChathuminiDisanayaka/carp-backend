@@ -1,0 +1,56 @@
+###
+
+# curl --location 'http://localhost:8080/api/user'
+#--header 'Content-Type: application/json'
+#--header 'Cookie: JSESSIONID=5BB2F25F4AF860FA8A56028A413A6BAF'
+#--data '{
+#    "username": "damish3",
+#    "password": "damish"
+#}'
+POST http://localhost:8090/api/user
+Cookie: JSESSIONID=5BB2F25F4AF860FA8A56028A413A6BAF
+Content-Type: application/json
+
+{
+  "username": "damish bole",
+  "password": "damish",
+  "address": {
+    "city": "tanglle",
+    "street": "araliya",
+    "code":"21c"
+  },
+  "department": {
+    "depName": "ale"
+  }
+}
+
+###
+POST http://localhost:8090/api/product/saveProduct
+Cookie: JSESSIONID=5BB2F25F4AF860FA8A56028A413A6BAF
+Content-Type: application/json
+
+{
+  "name": "wood chair2",
+  "price": "200.00",
+  "quantity": 10
+}
+
+###
+PUT http://localhost:8090/api/product/updateProduct/1
+Cookie: JSESSIONID=5BB2F25F4AF860FA8A56028A413A6BAF
+Content-Type: application/json
+
+{
+  "name": "wood",
+  "price": "100.00",
+  "quantity": 20
+}
+
+###
+DELETE http://localhost:8090/api/product/deleteProduct/2
+###
+
+GET http://localhost:8090/api/product/getProducts
+###
+
+GET http://localhost:8090/api/user/getUsers
