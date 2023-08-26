@@ -18,4 +18,6 @@ public class Product {
     private String price;
     @Column
     private Integer quantity;
+    @Column
+    private String imageUrl;
 }

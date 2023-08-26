@@ -11,4 +11,6 @@ public class UserResponseDto {
     private String username;
     private Address address;
     private Department department;
+
+    private String test;
 }
