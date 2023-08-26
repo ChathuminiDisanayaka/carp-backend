@@ -3,11 +3,14 @@ package com.carp.carpentry.controller;
 import Dto.ProductRequestDto;
 import com.carp.carpentry.entity.Product;
 import com.carp.carpentry.repository.ProductRepository;
+import com.carp.carpentry.services.FirebaseService;
 import com.carp.carpentry.services.ProductDetailService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -19,7 +22,9 @@ public class ProductController {
     private ProductDetailService productDetailService;
     private ProductRepository productRepository;
 
-    public ProductController(ProductDetailService productDetailService,ProductRepository productRepository){
+
+
+    public ProductController(ProductDetailService productDetailService,ProductRepository productRepository,FirebaseService firebaseService){
         this.productDetailService = productDetailService;
         this.productRepository = productRepository;
     }
@@ -30,16 +35,30 @@ public class ProductController {
     }
 
     @PostMapping("/saveProduct")
-    public ResponseEntity<String> createProduct(@RequestBody ProductRequestDto productRequestDto){
+    public ResponseEntity<String> createProduct(@RequestParam("name") String name,
+                                @RequestParam("price") String price,
+                                                @RequestParam("quantity") int quantity
+            ,@RequestParam("file") MultipartFile file){
         // Validate the request data (optional)
-        if (productRequestDto == null || StringUtils.isEmpty(productRequestDto.getName()) || StringUtils.isEmpty(productRequestDto.getPrice())|| StringUtils.isEmpty(productRequestDto.getQuantity())) {
+        if ( StringUtils.isEmpty(name) || StringUtils.isEmpty(quantity)) {
             return ResponseEntity.badRequest().body("Invalid product data");
         }
-        productDetailService.createProduct(
-                productRequestDto.getName(),
-                productRequestDto.getPrice(),
-                productRequestDto.getQuantity()
-        );
+        if (file.isEmpty()) {
+            productDetailService.createProduct(
+                    name,
+                    price,
+                    quantity
+            );
+        }else {
+
+            productDetailService.createProduct(
+                    name,
+                    price,
+                    quantity,
+                    file
+            );
+        }
+
 
         return ResponseEntity.ok("Product created successfully");
     }
